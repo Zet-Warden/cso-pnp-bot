@@ -45,6 +45,7 @@ app.post('/messages/api', async (req, res) => {
         items: Object.keys(rowInfo).map((key) => {
             return {
                 type: 'TextBlock',
+                wrap: true,
                 width: 'auto',
                 separator: true,
                 text: rowInfo[key] || 'N/A',
