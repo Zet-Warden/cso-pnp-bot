@@ -68,6 +68,7 @@ app.post('/messages/api', async (req, res) => {
                     body: [
                         {
                             type: 'Table',
+                            gridStyle: 'accent',
                             firstRowAsHeaders: true,
                             columns: [
                                 {
@@ -75,6 +76,9 @@ app.post('/messages/api', async (req, res) => {
                                 },
                                 {
                                     width: 1,
+                                },
+                                {
+                                    width: 3,
                                 },
                             ],
                             rows: [
@@ -88,7 +92,7 @@ app.post('/messages/api', async (req, res) => {
                                                     type: 'TextBlock',
                                                     text: 'Name',
                                                     wrap: true,
-                                                    weigth: 'Bolder',
+                                                    weight: 'Bolder',
                                                 },
                                             ],
                                         },
@@ -97,9 +101,59 @@ app.post('/messages/api', async (req, res) => {
                                             items: [
                                                 {
                                                     type: 'TextBlock',
-                                                    text: 'Name',
+                                                    text: 'Type',
                                                     wrap: true,
-                                                    weigth: 'Bolder',
+                                                    weight: 'Bolder',
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'Description',
+                                                    wrap: true,
+                                                    weight: 'Bolder',
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                    style: 'accent',
+                                },
+                                {
+                                    type: 'TableRow',
+                                    cells: [
+                                        {
+                                            type: 'TableCell',
+                                            style: 'good',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'columns',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            style: 'warning',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'ColumnDefinition[]',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            style: 'accent',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: "Defines the table's columns (number of columns, and column sizes).",
+                                                    wrap: true,
                                                 },
                                             ],
                                         },
@@ -110,12 +164,69 @@ app.post('/messages/api', async (req, res) => {
                                     cells: [
                                         {
                                             type: 'TableCell',
+                                            style: 'good',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'rows',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            style: 'accent',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'TableRow[]',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            style: 'attention',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'Defines the rows of the Table, each being a collection of cells. Rows are not required, which allows empty Tables to be generated via templating without breaking the rendering of the whole card.',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            type: 'Table',
+                            gridStyle: 'accent',
+                            firstRowAsHeaders: true,
+                            showGridLines: false,
+                            columns: [
+                                {
+                                    width: 1,
+                                },
+                                {
+                                    width: 1,
+                                },
+                                {
+                                    width: 3,
+                                },
+                            ],
+                            rows: [
+                                {
+                                    type: 'TableRow',
+                                    cells: [
+                                        {
+                                            type: 'TableCell',
                                             items: [
                                                 {
                                                     type: 'TextBlock',
                                                     text: 'Name',
                                                     wrap: true,
-                                                    weigth: 'Bolder',
+                                                    weight: 'Bolder',
                                                 },
                                             ],
                                         },
@@ -124,9 +235,97 @@ app.post('/messages/api', async (req, res) => {
                                             items: [
                                                 {
                                                     type: 'TextBlock',
-                                                    text: 'Name',
+                                                    text: 'Type',
                                                     wrap: true,
-                                                    weigth: 'Bolder',
+                                                    weight: 'Bolder',
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'Description',
+                                                    wrap: true,
+                                                    weight: 'Bolder',
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                    style: 'accent',
+                                },
+                                {
+                                    type: 'TableRow',
+                                    cells: [
+                                        {
+                                            type: 'TableCell',
+                                            style: 'good',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'columns',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            style: 'warning',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'ColumnDefinition[]',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            style: 'accent',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: "Defines the table's columns (number of columns, and column sizes).",
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'TableRow',
+                                    cells: [
+                                        {
+                                            type: 'TableCell',
+                                            style: 'good',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'rows',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            style: 'accent',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'TableRow[]',
+                                                    wrap: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: 'TableCell',
+                                            style: 'attention',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'Defines the rows of the Table, each being a collection of cells. Rows are not required, which allows empty Tables to be generated via templating without breaking the rendering of the whole card.',
+                                                    wrap: true,
                                                 },
                                             ],
                                         },
