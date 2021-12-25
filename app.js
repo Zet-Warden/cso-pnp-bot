@@ -13,7 +13,7 @@ app.post('/messages/api', async (req, res) => {
 
     const [, , opaNumber] = text.trim().split(' ');
     // console.log(opaNumber);
-    //const rowInfo = (await getRowInfo(opaNumber)).info;
+    const rowInfo = (await getRowInfo(opaNumber)).info;
     // const textInfo = Object.keys(rowInfo).reduce((prev, currProp) => {
     //     return `${prev}\n\n${currProp}: ${rowInfo[currProp]}`;
     // }, '');
@@ -27,6 +27,31 @@ app.post('/messages/api', async (req, res) => {
     // console.log(textInfo);
 
     // res.json({ type: 'message', textFormat: 'xml', text: `${textInfo}` });
+
+    const columnOne = {
+        type: 'Column',
+        items: Object.keys(rowInfo).map((key) => {
+            return {
+                type: 'TextBlock',
+                separator: true,
+                text: key,
+            };
+        }),
+    };
+
+    const columnTwo = {
+        type: 'Column',
+        items: Object.keys(rowInfo).map((key) => {
+            return {
+                type: 'TextBlock',
+                separator: true,
+                text: rowInfo[key],
+            };
+        }),
+    };
+
+    const columns = [columnOne, columnTwo];
+
     res.json({
         type: 'message',
         attachments: [
@@ -38,16 +63,8 @@ app.post('/messages/api', async (req, res) => {
                     version: '1.4',
                     body: [
                         {
-                            type: 'TextBlock',
-                            text: 'Request sent by: ' + 'Ria Panugan',
-                        },
-                        {
-                            type: 'Image',
-                            url: 'https://c.s-microsoft.com/en-us/CMSImages/DesktopContent-04_UPDATED.png?version=43c80870-99dd-7fb1-48c0-59aced085ab6',
-                        },
-                        {
-                            type: 'TextBlock',
-                            text: 'Sample image for Adaptive Card.',
+                            type: 'ColumnSet',
+                            columns: columns,
                         },
                     ],
                 },
