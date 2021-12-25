@@ -82,16 +82,26 @@ app.post('/messages/api', async (req, res) => {
                                     type: 'TableRow',
                                     cells: [
                                         {
-                                            type: 'TextBlock',
-                                            text: 'Name',
-                                            wrap: true,
-                                            weigth: 'Bolder',
+                                            type: 'TableCell',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'Name',
+                                                    wrap: true,
+                                                    weigth: 'Bolder',
+                                                },
+                                            ],
                                         },
                                         {
-                                            type: 'TextBlock',
-                                            text: 'Name',
-                                            wrap: true,
-                                            weigth: 'Bolder',
+                                            type: 'TableCell',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'Name',
+                                                    wrap: true,
+                                                    weigth: 'Bolder',
+                                                },
+                                            ],
                                         },
                                     ],
                                 },
@@ -99,16 +109,26 @@ app.post('/messages/api', async (req, res) => {
                                     type: 'TableRow',
                                     cells: [
                                         {
-                                            type: 'TextBlock',
-                                            text: 'Name',
-                                            wrap: true,
-                                            weigth: 'Bolder',
+                                            type: 'TableCell',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'Name',
+                                                    wrap: true,
+                                                    weigth: 'Bolder',
+                                                },
+                                            ],
                                         },
                                         {
-                                            type: 'TextBlock',
-                                            text: 'Name',
-                                            wrap: true,
-                                            weigth: 'Bolder',
+                                            type: 'TableCell',
+                                            items: [
+                                                {
+                                                    type: 'TextBlock',
+                                                    text: 'Name',
+                                                    wrap: true,
+                                                    weigth: 'Bolder',
+                                                },
+                                            ],
                                         },
                                     ],
                                 },
