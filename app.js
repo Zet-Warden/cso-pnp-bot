@@ -7,7 +7,7 @@ require('dotenv').config();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.post('/messages/api', (req, res) => {
+app.post('/messages/api', async (req, res) => {
     const { from, text } = req.body;
     const username = from.name;
 
