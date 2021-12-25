@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.post('/messages/api', (req, res) => {
     console.log('message request made');
-    res.json({ msg: 'OKAY' });
+    res.json({ type: 'message', text: 'Hello!' });
 });
 
 const PORT = process.env.PORT || 3000;
