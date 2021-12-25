@@ -14,21 +14,21 @@ app.post('/messages/api', async (req, res) => {
     const [, , opaNumber] = text.trim().split(' ');
     // console.log(opaNumber);
     const rowInfo = (await getRowInfo(opaNumber)).info;
-    // const textInfo = Object.keys(rowInfo).reduce((prev, currProp) => {
-    //     return `${prev}\n\n${currProp}:&#09;&#09;&#09;${rowInfo[currProp]}`;
-    // }, '');
+    const textInfo = Object.keys(rowInfo).reduce((prev, currProp) => {
+        return `${prev}\n\n${currProp}:&#09;&#09;&#09;${rowInfo[currProp]}`;
+    }, '');
 
-    // let textInfo =
-    //     '<table style=”padding:250px;width:500px;border:100px white;”> <tr style=”background-color:#c6c6c6"> <th>Number</th><th>Short Description</th></tr>';
+    let textInfo =
+        '<table style="padding:250px;width:500px;border:100px white;"> <tr style="background-color:#c6c6c6"></tr>';
 
-    // textInfo += Object.keys(rowInfo).reduce((prev, currProp) => {
-    //     return `${prev}<tr><td>${currProp}:</td><td>${rowInfo[currProp]}</td></tr>`;
-    // }, '');
-    // console.log(textInfo);
+    textInfo += Object.keys(rowInfo).reduce((prev, currProp) => {
+        return `${prev}<tr><td>${currProp}:</td><td>${rowInfo[currProp]}</td></tr>`;
+    }, '');
+    console.log(textInfo);
 
-    // res.json({ type: 'message', textFormat: 'xml', text: `${textInfo}` });
+    res.json({ type: 'message', textFormat: 'xml', text: `${textInfo}` });
 
-    const columnOne = {
+    /*  const columnOne = {
         type: 'Column',
         items: Object.keys(rowInfo).map((key) => {
             return {
@@ -80,7 +80,7 @@ app.post('/messages/api', async (req, res) => {
                 thumbnailUrl: null,
             },
         ],
-    });
+    }); */
 });
 
 const PORT = process.env.PORT || 3000;
