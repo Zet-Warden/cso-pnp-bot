@@ -1,15 +1,19 @@
 const crypto = require('crypto');
 const express = require('express');
 const app = express();
+const sheetsHelper = require('./sheets.js');
 require('dotenv').config();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post('/messages/api', (req, res) => {
-    const { from } = req.body;
+    const { from, text } = req.body;
     const username = from.name;
-    res.json({ type: 'message', text: `Hello ${username}` });
+
+    const [_, opaNumber] = text.split(' ');
+    const textInfo = (await getRowInfo(opaNumber)).info._rawData;
+    res.json({ type: 'message', text: `Hello ${textInfo}` });
 });
 
 const PORT = process.env.PORT || 3000;
