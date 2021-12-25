@@ -5,6 +5,7 @@ const doc = new GoogleSpreadsheet(
     '1RxTwUTd1dYHIN1B9Buwcq8T_hyZp3Fm1P1T8jkeW7EQ'
 );
 
+let sheetHelper;
 let sheet, rows;
 
 //load  the googlesheets document
@@ -18,6 +19,8 @@ let sheet, rows;
 
     sheet = doc.sheetsByIndex[0]; // the first sheet
     rows = await sheet.getRows();
+
+    sheetHelper = {};
 })();
 
 function verifyOPANumber(_opaNumber) {
@@ -42,7 +45,21 @@ function verifyOPANumber(_opaNumber) {
 async function getRowInfo(_opaNumber) {
     const { isValid, opaNumber } = verifyOPANumber(_opaNumber);
     const index = opaNumber - 1;
-    return { isValid, info: rows[index] };
+    const info = generateRowInfoObject(rows[index]);
+    return {
+        isValid,
+        info,
+    };
+}
+
+function generateRowInfoObject(rowInfo) {
+    const rowObject = {};
+    Object.keys(rows[0]).forEach((prop, index) => {
+        if (prop.charAt(0) != '_') {
+            rowObject[prop] = rowInfo[prop];
+        }
+    });
+    return rowObject;
 }
 
 module.exports = {

@@ -11,9 +11,13 @@ app.post('/messages/api', async (req, res) => {
     const { from, text } = req.body;
     const username = from.name;
 
-    const [_, opaNumber] = text.trim().split(' ');
-    console.log(opaNumber);
-    const textInfo = (await getRowInfo(opaNumber)).info._rawData;
+    const [, , opaNumber] = text.trim().split(' ');
+    // console.log(opaNumber);
+    const rowInfo = (await getRowInfo(opaNumber)).info;
+    const textInfo = Object.keys(rowInfo).reduce((prev, currProp) => {
+        return `${prev}\n${currProp}: ${rowInfo[currProp]}`;
+    }, '');
+    // console.log(textInfo);
     res.json({ type: 'message', text: `${textInfo}` });
 });
 
