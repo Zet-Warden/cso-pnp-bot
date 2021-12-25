@@ -52,7 +52,7 @@ app.post('/messages/api', async (req, res) => {
                 separator: true,
                 text:
                     (rowInfo[key].includes('https')
-                        ? `[Link](${rowInfo[key]}])`
+                        ? `[Link](${rowInfo[key]})`
                         : rowInfo[key]) || 'N/A',
             };
         }),
