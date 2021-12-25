@@ -14,7 +14,7 @@ app.post('/messages/api', async (req, res) => {
     const [_, opaNumber] = text.trim().split(' ');
     console.log(opaNumber);
     const textInfo = (await getRowInfo(opaNumber)).info._rawData;
-    res.json({ type: 'message', text: `Hello ${textInfo}` });
+    res.json({ type: 'message', text: `${textInfo}` });
 });
 
 const PORT = process.env.PORT || 3000;
