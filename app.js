@@ -47,7 +47,7 @@ app.post('/messages/api', async (req, res) => {
             return {
                 type: 'TextBlock',
                 wrap: true,
-                width: 'auto',
+                width: 'stretch',
                 separator: true,
                 text: rowInfo[key] || 'N/A',
             };
