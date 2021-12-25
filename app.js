@@ -15,7 +15,7 @@ app.post('/messages/api', async (req, res) => {
     // console.log(opaNumber);
     const rowInfo = (await getRowInfo(opaNumber)).info;
     const textInfo = Object.keys(rowInfo).reduce((prev, currProp) => {
-        return `${prev}\n${currProp}: ${rowInfo[currProp]}`;
+        return `${prev}\n\n${currProp}: ${rowInfo[currProp]}`;
     }, '');
     // console.log(textInfo);
     res.json({ type: 'message', text: `${textInfo}` });
