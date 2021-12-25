@@ -39,7 +39,7 @@ app.post('/messages/api', async (req, res) => {
                     body: [
                         {
                             type: 'TextBlock',
-                            text: 'Request sent by: ' + receivedMsg.from.name,
+                            text: 'Request sent by: ' + 'Ria Panugan',
                         },
                         {
                             type: 'Image',
