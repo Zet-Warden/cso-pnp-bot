@@ -72,8 +72,8 @@ app.post('/messages/api', async (req, res) => {
                         },
                     ],
                 },
-                msteams: {
-                    width: 'Full',
+                msTeams: {
+                    width: 'full',
                 },
                 name: null,
                 thumbnailUrl: null,
