@@ -11,7 +11,8 @@ app.post('/messages/api', async (req, res) => {
     const { from, text } = req.body;
     const username = from.name;
 
-    const [_, opaNumber] = text.split(' ');
+    const [_, opaNumber] = text.trim().split(' ');
+    console.log(opaNumber);
     const textInfo = (await getRowInfo(opaNumber)).info._rawData;
     res.json({ type: 'message', text: `Hello ${textInfo}` });
 });
