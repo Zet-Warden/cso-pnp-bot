@@ -44,3 +44,7 @@ async function getRowInfo(_opaNumber) {
     const index = opaNumber - 1;
     return { isValid, info: rows[index] };
 }
+
+module.exports = {
+    getRowInfo,
+};

@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const express = require('express');
 const app = express();
-const sheetsHelper = require('./sheets.js');
+const { getRowInfo } = require('./sheets.js');
 require('dotenv').config();
 
 app.use(express.urlencoded({ extended: true }));
