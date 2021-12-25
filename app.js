@@ -19,10 +19,22 @@ app.post('/messages/api', async (req, res) => {
     // }, '');
 
     let textInfo =
-        '<table style="border: 1px solid black;border-collapse: collapse;"> <tr style="background-color:#c6c6c6"></tr>';
+        '<table style="border: 1px solid black;border-collapse: collapse;">';
 
     textInfo += Object.keys(rowInfo).reduce((prev, currProp) => {
-        return `${prev}<tr><td style="width: max-content; font-weight: bold; padding: 0.75rem 1.5rem; border: 1px solid black;border-collapse: collapse;">${currProp}:</td><td style="padding: 0.75rem 1.5rem; border: 1px solid black;border-collapse: collapse;">${rowInfo[currProp]}</td></tr>`;
+        return `${prev}
+            <tr>
+                <td style="width: max-content; font-weight: bold; padding: 0.75rem 1.5rem; border: 1px solid black;border-collapse: collapse;">
+                    ${currProp}:
+                </td>
+                <td style="padding: 0.75rem 1.5rem; border: 1px solid black;border-collapse: collapse;">
+                    ${
+                        (rowInfo[key].includes('https')
+                            ? `<a href=(${rowInfo[key]})>Link</a>`
+                            : rowInfo[key]) || 'N/A'
+                    }
+                </td>
+            </tr>`;
     }, '');
     // console.log(textInfo);
 
