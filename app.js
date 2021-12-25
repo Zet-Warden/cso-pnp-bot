@@ -33,6 +33,7 @@ app.post('/messages/api', async (req, res) => {
         items: Object.keys(rowInfo).map((key) => {
             return {
                 type: 'TextBlock',
+                width: 'auto',
                 separator: true,
                 text: key,
             };
@@ -44,8 +45,9 @@ app.post('/messages/api', async (req, res) => {
         items: Object.keys(rowInfo).map((key) => {
             return {
                 type: 'TextBlock',
+                width: 'auto',
                 separator: true,
-                text: rowInfo[key],
+                text: rowInfo[key] || 'N/A',
             };
         }),
     };
