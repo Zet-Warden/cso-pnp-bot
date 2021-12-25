@@ -48,6 +48,7 @@ app.post('/messages/api', async (req, res) => {
                 type: 'TextBlock',
                 width: '350px',
                 minHeight: '180px',
+                wrap: rowInfo[key].includes('Email sent at'),
                 separator: true,
                 text:
                     (rowInfo[key].includes('https')

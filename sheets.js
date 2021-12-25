@@ -56,10 +56,24 @@ function generateRowInfoObject(rowInfo) {
     const rowObject = {};
     Object.keys(rows[0]).forEach((prop, index) => {
         if (prop.charAt(0) != '_') {
-            rowObject[prop] = rowInfo[prop];
+            const transformedProp = transformProp(prop);
+            rowObject[transformedProp] = rowInfo[prop];
         }
     });
     return rowObject;
+}
+
+function transformProp(prop) {
+    switch (prop) {
+        case 'Activity Reference Number (ARN)':
+            return 'ARN';
+        case 'Type of Publicity Material':
+            return 'Publicity Material';
+        case 'Social Media Platform for Posting':
+            return 'Social Media Platform';
+        default:
+            return prop;
+    }
 }
 
 module.exports = {
