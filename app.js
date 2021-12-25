@@ -36,7 +36,7 @@ app.post('/messages/api', async (req, res) => {
                 width: 'auto',
                 minHeight: '180px',
                 separator: true,
-                text: key,
+                text: `**${key}**`,
             };
         }),
     };
