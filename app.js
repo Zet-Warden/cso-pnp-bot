@@ -7,8 +7,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post('/messages/api', (req, res) => {
-    console.log('message request made');
-    res.json({ type: 'message', text: `${req.body}` });
+    const { from } = req.body;
+    const username = from.name;
+    res.json({ type: 'message', text: `Hello ${username}` });
 });
 
 const PORT = process.env.PORT || 3000;
