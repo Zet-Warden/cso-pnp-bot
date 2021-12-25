@@ -70,8 +70,7 @@ app.post('/messages/api', async (req, res) => {
                     version: '1.5',
                     body: [
                         {
-                            type: 'Table',
-                            firstRowAsHeaders: true,
+                            type: 'ColumnSet',
                             columns: columns,
                         },
                     ],
