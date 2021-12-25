@@ -35,6 +35,7 @@ app.post('/messages/api', async (req, res) => {
                 type: 'TextBlock',
                 wrap: true,
                 width: 'auto',
+                minHeight: '80px',
                 separator: true,
                 text: key,
             };
@@ -47,7 +48,8 @@ app.post('/messages/api', async (req, res) => {
             return {
                 type: 'TextBlock',
                 wrap: true,
-                width: 'stretch',
+                width: '150px',
+                minHeight: '80px',
                 separator: true,
                 text: rowInfo[key] || 'N/A',
             };
@@ -71,9 +73,6 @@ app.post('/messages/api', async (req, res) => {
                             columns: columns,
                         },
                     ],
-                },
-                msTeams: {
-                    width: 'full',
                 },
                 name: null,
                 thumbnailUrl: null,
