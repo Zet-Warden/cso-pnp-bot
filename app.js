@@ -72,6 +72,9 @@ app.post('/messages/api', async (req, res) => {
                         },
                     ],
                 },
+                msteams: {
+                    width: 'Full',
+                },
                 name: null,
                 thumbnailUrl: null,
             },
