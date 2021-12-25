@@ -19,8 +19,6 @@ let sheet, rows;
 
     sheet = doc.sheetsByIndex[0]; // the first sheet
     rows = await sheet.getRows();
-
-    console.log(await getRowInfo(2751));
 })();
 
 function verifyOPANumber(_opaNumber) {
