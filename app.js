@@ -30,7 +30,7 @@ app.post('/messages/api', async (req, res) => {
                 <td style="padding: 0.75rem 1.5rem; border: 1px solid black;border-collapse: collapse;">
                     ${
                         (rowInfo[currProp].includes('https')
-                            ? `<a href=(${rowInfo[key]})>Link</a>`
+                            ? `<a href=(${rowInfo[currProp]})>Link</a>`
                             : rowInfo[currProp]) || 'N/A'
                     }
                 </td>
