@@ -7,6 +7,7 @@ require('dotenv').config();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+//TODO: sheets.js should be reloaded on every request
 app.post('/messages/api', async (req, res) => {
     const { from, text } = req.body;
     const username = from.name;
@@ -30,7 +31,7 @@ app.post('/messages/api', async (req, res) => {
                 <td style="padding: 0.75rem 1.5rem; border: 1px solid black;border-collapse: collapse;">
                     ${
                         (rowInfo[currProp].includes('https')
-                            ? `<a href=(${rowInfo[currProp]})>Link</a>`
+                            ? `<a href=${rowInfo[currProp]}>Link</a>`
                             : rowInfo[currProp]) || 'N/A'
                     }
                 </td>
