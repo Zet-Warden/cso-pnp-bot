@@ -38,7 +38,7 @@ function verifyOPANumber(_opaNumber) {
     }
 
     return {
-        isValid: isValid == false ? isValid : _opaNumber + 1 <= rows.length,
+        isValid: isValid == false ? isValid : opaNumber + 1 <= rows.length,
         opaNumber,
     };
 }
