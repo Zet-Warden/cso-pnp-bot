@@ -13,7 +13,7 @@ class CommanHandler {
     }
 
     handleCommand(_command, args) {
-        var command = commandInput.toLowerCase();
+        var command = _command.toLowerCase();
         if (this.commands[command] == undefined) {
             return {
                 type: 'message',
