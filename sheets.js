@@ -44,13 +44,12 @@ function verifyOPANumber(_opaNumber) {
 }
 
 async function getRowInfo(_opaNumber) {
-    //ensure that data is fresh when getting row info
-    await loadOPASheetData();
-
     const { isValid, opaNumber } = verifyOPANumber(_opaNumber);
     const index = opaNumber - 1;
 
     if (isValid) {
+        //ensure that data is fresh when getting row info
+        await loadOPASheetData();
         return generateRowInfoObject(rows[index]);
     }
     return undefined;
