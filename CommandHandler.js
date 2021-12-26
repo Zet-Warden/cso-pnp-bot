@@ -3,16 +3,23 @@ class CommanHandler {
         this.commands = {};
     }
 
-    registerCommand(command, commandAction) {
-        var command = command.toLowerCase();
+    registerCommand(_command, commandAction) {
+        var command = _command.toLowerCase();
         if (this.commands[command] != undefined) {
-            throw `command ${command} is already registered. try another command name`;
+            throw `Command "${_command}" is already registered. Try another command name`;
         }
 
         this.commands[command] = commandAction;
     }
 
-    handleCommand(command, args) {
+    handleCommand(_command, args) {
+        var command = commandInput.toLowerCase();
+        if (this.commands[command] == undefined) {
+            return {
+                type: 'message',
+                text: `"${_command}" is not a registered command. Please try again`,
+            };
+        }
         return this.commands[command](args);
     }
 }

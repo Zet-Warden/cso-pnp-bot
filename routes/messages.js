@@ -5,8 +5,8 @@ const CommandHandler = require('../CommandHandler.js');
 router.post('/api', async (req, res) => {
     const { text } = req.body;
 
-    const [mention, content] = text.split('!');
-    const [command, ...args] = content.split(/[ ]+/);
+    // const [mention, content] = text.split('!');
+    const [mention, command, ...args] = text.split(/[ ]+/);
     const response = await CommandHandler.handleCommand(command, args);
 
     res.json(response);

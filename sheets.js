@@ -37,7 +37,6 @@ function verifyOPANumber(_opaNumber) {
         var opaNumber = _opaNumber;
     }
 
-    console.log(_opaNumber);
     return {
         isValid: isValid == false ? isValid : _opaNumber + 1 <= rows.length,
         opaNumber,
