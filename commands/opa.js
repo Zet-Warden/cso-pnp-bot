@@ -12,7 +12,7 @@ async function handleOPACommand(args) {
     }
 
     const table = createTable(rowInfo);
-
+    console.log(!!rowInfo);
     return {
         type: 'message',
         textFormat: 'xml',
