@@ -1,4 +1,4 @@
-const commandHandler = require('../CommandHandler.js');
+const CommandHandler = require('../CommandHandler.js');
 const { getRowInfo } = require('../sheets.js');
 
 async function handleOPACommand(args) {
@@ -7,7 +7,7 @@ async function handleOPACommand(args) {
         return {
             type: 'message',
             textFormat: 'xml',
-            text: `Unable to get OPA-Number ${args[0]}`,
+            text: `Unable to get OPA-Number: ${args[0]}`,
         };
     }
 
@@ -43,4 +43,4 @@ function createTable(info) {
     return `${tableHeader}${tableInfo}`;
 }
 
-commandHandler.registerCommand('opa', handleOPACommand);
+CommandHandler.registerCommand('opa', handleOPACommand);

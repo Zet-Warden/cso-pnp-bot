@@ -37,6 +37,7 @@ function verifyOPANumber(_opaNumber) {
         var opaNumber = _opaNumber;
     }
 
+    console.log(_opaNumber);
     return {
         isValid: isValid == false ? isValid : _opaNumber + 1 <= rows.length,
         opaNumber,
@@ -49,8 +50,11 @@ async function getRowInfo(_opaNumber) {
 
     const { isValid, opaNumber } = verifyOPANumber(_opaNumber);
     const index = opaNumber - 1;
-    const info = generateRowInfoObject(rows[index]);
-    return isValid ? info : undefined;
+
+    if (isValid) {
+        return generateRowInfoObject(rows[index]);
+    }
+    return undefined;
 }
 
 function generateRowInfoObject(rowInfo) {

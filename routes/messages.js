@@ -1,0 +1,15 @@
+const express = require('express');
+const router = express.Router();
+const CommandHandler = require('../CommandHandler.js');
+
+router.post('/api', async (req, res) => {
+    const { text } = req.body;
+
+    const [mention, content] = text.split('!');
+    const [command, ...args] = content.split(/[ ]+/);
+    const response = await CommandHandler.handleCommand(command, args);
+
+    res.json(response);
+});
+
+module.exports = router;
