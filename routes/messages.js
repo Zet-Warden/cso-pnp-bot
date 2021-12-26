@@ -6,6 +6,7 @@ router.post('/api', async (req, res) => {
     const { text } = req.body;
 
     // const [mention, content] = text.split('!');
+    console.log(text);
     const [mention, command, ...args] = text.split(/[ ]+/);
     const response = await CommandHandler.handleCommand(command, args);
 
