@@ -58,24 +58,6 @@ function removeMetaDataFromOPAInfo(opaInfo) {
     return opaObject;
 }
 
-// /**
-//  * Shortens column name derived from google sheets data
-//  * @param {*} column the column name from google sheets to be used as key for OPA object
-//  * @returns shortened version of the column name if applicable else the key itself
-//  */
-// function shortenColumnName(column) {
-//     switch (column) {
-//         case 'Activity Reference Number (ARN)':
-//             return 'ARN';
-//         case 'Type of Publicity Material':
-//             return 'Publicity Material';
-//         case 'Social Media Platform for Posting':
-//             return 'Social Media Platform';
-//         default:
-//             return column;
-//     }
-// }
-
 module.exports = {
     getOPAInfo,
 };
