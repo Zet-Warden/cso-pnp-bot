@@ -12,10 +12,11 @@ router.post('/api', async (req, res) => {
         channelName: channelId.split('/')[0],
         channelId: channelId.split('/')[1],
     };
-    // const [mention, content] = text.split('!');
-    console.log(text);
+
+    console.log('meta information:', meta);
+    console.log('user message:', text);
     const [mention, command, ...args] = text.split(/[ ]+/);
-    console.log(mention, command, args);
+    console.log('metion:', mention, 'command:', command, 'arguments:', args);
     const response = await CommandHandler.handleCommand(command, {
         meta,
         args,
