@@ -52,7 +52,7 @@ function removeMetaDataFromOPAInfo(opaInfo) {
         //metadata is prefixed with '_'
         if (column.charAt(0) != '_') {
             // const shortenedColumn = shortenColumnName(column);
-            opaObject[column] = opaInfo[column];
+            opaObject[column] = opaInfo[column] || 'N/A';
         }
     });
     return opaObject;
