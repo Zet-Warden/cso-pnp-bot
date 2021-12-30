@@ -24,16 +24,3 @@ const CommanHandler = {
 };
 
 module.exports = CommanHandler;
-
-//register the commands from the commands folder to the command handler
-(function registerCommands() {
-    const fs = require('fs');
-    const path = require('path');
-    const fileNames = fs.readdirSync(path.join(__dirname, 'commands'));
-
-    fileNames.forEach((fileName) => {
-        if (fileName.endsWith('.js')) {
-            require(`./commands/${fileName}`);
-        }
-    });
-})();
