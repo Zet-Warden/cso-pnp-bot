@@ -19,7 +19,7 @@ async function sendHTMLEmail(data = {}) {
     const html = await readHTMLFile(__dirname + '/email.html');
     var template = handlebars.compile(html);
     var htmlToSend = template(data);
-    console.log(htmlToSend);
+
     var mailOptions = {
         from: process.env.EMAIL,
         to: data['Email Address'],
