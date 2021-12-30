@@ -1,8 +1,8 @@
 const CommandHandler = require('../CommandHandler.js');
-const { getRowInfo } = require('./sheets.js');
+const { getOPAInfo } = require('../utils/OpaSheets.js');
 
 async function handleOPACommand(args) {
-    const rowInfo = await getRowInfo(args[0]);
+    const rowInfo = await getOPAInfo(args[0]);
     if (!rowInfo) {
         return {
             type: 'message',
