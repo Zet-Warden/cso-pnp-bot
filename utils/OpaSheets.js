@@ -102,7 +102,7 @@ async function hasOPABeenChecked(opaNumber) {
     //OPA rows are 1-indexed, arrays are 0-indexed
     const opaInfo = isOPANumber && rows[opaNumber - 1];
 
-    return opaInfo ? Boolean(opaInfo['Email Status']) : false;
+    return opaInfo ? Boolean(opaInfo['Status']) : false;
 }
 
 /**
