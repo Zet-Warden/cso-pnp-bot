@@ -92,6 +92,8 @@ async function setOPAInfo({ opaNumber, status, remarks = '', checkedBy = '' }) {
                 : 'N/A',
         },
     });
+    //reload for those who'll check if set has been successful
+    loadOPASheetData();
 }
 
 async function hasOPABeenChecked(opaNumber) {
