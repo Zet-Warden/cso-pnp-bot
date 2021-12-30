@@ -3,6 +3,7 @@ const { getOPAInfo } = require('../utils/OpaSheets.js');
 
 async function handleOPACommand(args) {
     const rowInfo = await getOPAInfo(args[0]);
+    console.log(rowInfo);
     if (!rowInfo) {
         return {
             type: 'message',
