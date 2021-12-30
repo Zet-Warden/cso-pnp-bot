@@ -1,4 +1,5 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const { DateTime } = require('luxon');
 const { sendHTMLEmail } = require('./Mailer.js');
 require('dotenv').config();
 
@@ -85,15 +86,15 @@ async function setOPAInfo({
         const emailStatusCell = opaSheet.getCell(rowIndex, 20);
 
         //get timestamp
-        const today = new Date();
-        const month = today.getMonth() + 1;
-        const date = today.getDate();
-        const year = today.getFullYear();
+        const today = DateTime.now().setZone('UTC+8');
+        const month = today.month;
+        const date = today.day;
+        const year = today.year;
 
-        let hours = today.getHours();
+        let hours = today.hour;
         hours = hours >= 13 ? hours - 12 : hours;
-        const minutes = today.getMinutes();
-        const seconds = today.getSeconds();
+        const minutes = today.minute;
+        const seconds = today.second;
 
         const ampm = hours >= 12 ? 'PM' : 'AM';
 
