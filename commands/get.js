@@ -21,6 +21,11 @@ async function sendOPAInfo(args) {
     return createHTMLMessage(table);
 }
 
+/**
+ * Formats the OPA Object into an HTML table
+ * @param {Object} info object containing OPA related information
+ * @returns {String} html table
+ */
 function createTable(info) {
     let tableHeader =
         '<table style="border: 1px solid black;border-collapse: collapse;">';
