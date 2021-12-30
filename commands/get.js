@@ -7,14 +7,14 @@ const { getOPAInfo } = require('../utils/OpaSheets.js');
 
 /**
  * Sends a message to MSTeams containing the info of the requested OPA number
- * @param {[String]} args arguments sent with the command
+ * @param {String} opaNumber first argument sent with the command
  * @returns MSTeam response object, containing info about the requested OPA number
  */
-async function sendOPAInfo(args) {
-    const opaInfo = await getOPAInfo(args[0]);
+async function sendOPAInfo([opaNumber]) {
+    const opaInfo = await getOPAInfo(opaNumber);
 
     if (!opaInfo) {
-        return createTextMessage(`Unable to get OPA-Number: ${args[0]}`);
+        return createTextMessage(`Unable to get OPA-Number: ${opaNumber}`);
     }
 
     const table = createTable(opaInfo);
