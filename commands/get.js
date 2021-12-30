@@ -10,7 +10,7 @@ const { getOPAInfo } = require('../utils/OpaSheets.js');
  * @param {String} opaNumber first argument sent with the command
  * @returns MSTeam response object, containing info about the requested OPA number
  */
-async function sendOPAInfo([opaNumber]) {
+async function sendOPAInfo({ args: [opaNumber] }) {
     const opaInfo = await getOPAInfo(opaNumber);
 
     if (!opaInfo) {

@@ -40,6 +40,25 @@ async function getOPAInfo(opaNumber) {
     return opaInfo ? removeMetaDataFromOPAInfo(opaInfo) : undefined;
 }
 
+async function setOPAInfo({ opaNumber, status, remarks = '', checkedBy = '' }) {
+    const { rows } = await loadOPASheetData();
+
+    //OPA numbers are only 1 until latest OPA number, i.e. 0 is false
+    const isOPANumber = Boolean(Number(opaNumber));
+    //OPA rows are 1-indexed, arrays are 0-indexed
+    const opaInfo = isOPANumber && rows[opaNumber - 1];
+
+    //exit immediately in invalid OPA number
+    if (!opaInfo) {
+        return undefined;
+    }
+
+    //set logic
+    opaInfo['Status'] = status == 'APPROVED' ? 'Approved' : 'Pended';
+    opaInfo['Remarks'] = remarks;
+    opaInfo;
+}
+
 /**
  * Generates a new object without metadata from google sheets
  * @param {Object} opaInfo the OPA information from google sheets
