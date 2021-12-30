@@ -1,5 +1,5 @@
 const CommandHandler = require('../CommandHandler.js');
-const { getRowInfo } = require('../sheets.js');
+const { getRowInfo } = require('./sheets.js');
 
 async function handleOPACommand(args) {
     const rowInfo = await getRowInfo(args[0]);
@@ -42,4 +42,4 @@ function createTable(info) {
     return `${tableHeader}${tableInfo}`;
 }
 
-CommandHandler.registerCommand('opa', handleOPACommand);
+CommandHandler.registerCommand('get', handleOPACommand);

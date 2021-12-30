@@ -1,7 +1,5 @@
-class CommanHandler {
-    constructor() {
-        this.commands = {};
-    }
+const CommanHandler = {
+    commands: {},
 
     registerCommand(_command, commandAction) {
         var command = _command.toLowerCase();
@@ -10,7 +8,7 @@ class CommanHandler {
         }
 
         this.commands[command] = commandAction;
-    }
+    },
 
     handleCommand(_command, args) {
         var command = _command.toLowerCase();
@@ -21,13 +19,13 @@ class CommanHandler {
             };
         }
         return this.commands[command](args);
-    }
-}
+    },
+};
 
-module.exports = new CommanHandler();
+module.exports = CommanHandler;
 
+//register the commands from the commands folder to the command handler
 (function registerCommands() {
-    //register the commands from the commands folder to the command handler
     const fs = require('fs');
     const path = require('path');
     const fileNames = fs.readdirSync(path.join(__dirname, 'commands'));
