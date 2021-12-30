@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base target="_top" />
+        <style>
+            * {
+                color: black;
+                box-sizing: border-box;
+            }
+            body {
+                font-weight: lighter;
+                line-height: 1.5rem;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            table,
+            th,
+            td {
+                border: 1px solid black;
+            }
+            td {
+                padding: 0.5rem 0.75rem;
+            }
+            .footer {
+                margin-top: 1.5rem;
+            }
+            .dikit {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            .banner {
+                color: #10670d;
+                font-size: 2rem;
+                font-weight: bold;
+                border-left: 20px solid #10670d;
+                background-color: #e3eedd;
+                padding-left: 20px;
+                margin-bottom: 20px;
+            }
+            .indent-left {
+                padding-left: 50px;
+            }
+            .mustard {
+                color: #d7a302;
+            }
+
+            @media (max-width: 550px) {
+                .banner {
+                    font-size: 1.1rem;
+                    padding: 14px 18px;
+                }
+                .indent-left {
+                    padding-left: 30px;
+                }
+            }
+        </style>
+    </head>
+    <body style="position: relative">
+        <header>
+            <img src="https://imgur.com/L0Olz51.png" style="width: 100%" />
+        </header>
+
+        <div class="banner">Online Publicity Approval Status</div>
+        <div class="indent-left">
+            <div style="line-height: 0.25rem">
+                <p>
+                    <strong>{{{ [Name] }}}</strong>
+                </p>
+                <p>
+                    <strong>{{{[Position In the Organization ]}}}</strong>
+                </p>
+                <p>
+                    <strong>{{{[Requesting Organization]}}}</strong>
+                </p>
+            </div>
+
+            <br />
+
+            <div style="line-height: 1.15rem">
+                <p>
+                    <strong style="color: #1e3f20"
+                        >Greetings in St. La Salle!</strong
+                    >
+                </p>
+
+                <p>
+                    This email is to inform you that we have received your
+                    submission {{{[Type of Publicity Material]}}} through our
+                    47th PNP Online Publicity Approval Form and has been
+                    processed by our PNP officer.
+                </p>
+
+                <p>Please see below for the status of your submission:</p>
+
+                <div style="margin-bottom: 7px">
+                    <p class="dikit">
+                        <strong>Activity: </strong>{{{[Activity Title]}}}
+                    </p>
+                    <p class="dikit"><strong>OPA#: </strong>{{{[OPA #]}}}</p>
+                    <p class="dikit"><strong>Status: </strong>{{{[Status]}}}</p>
+                    <p class="dikit"><strong>Remarks: </strong></p>
+                    <p class="dikit">{{{[Remarks]}}}</p>
+                </div>
+
+                <p>
+                    For more information on the services provided by PNP, please
+                    refer to the links below:
+                </p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>47th PNP Manual</td>
+                            <td>
+                                <strong
+                                    ><em class="mustard"
+                                        >available soon</em
+                                    ></strong
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>47th PNP Frequently Asked Questions (FAQs)</td>
+                            <td>
+                                <strong
+                                    ><em class="mustard"
+                                        >available soon</em
+                                    ></strong
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>47th PNP Process Workshop Request</td>
+                            <td>https://bit.ly/47thPNP_ServiceRequest</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                47th PNP Minor Publication Consultation Booking
+                            </td>
+                            <td>
+                                <strong
+                                    ><em class="mustard"
+                                        >available soon</em
+                                    ></strong
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+
+            <div>
+                <p style="margin-bottom: 10px">
+                    <strong style="color: #1e3f20">Always for service,</strong>
+                </p>
+                <div class="indent-left">
+                    <p class="dikit">
+                        <strong>Checked by: </strong>{{{[Checked By]}}}
+                    </p>
+                    <p class="dikit">
+                        <strong>Position: </strong>{{{[Authorization
+                        Position]}}}
+                    </p>
+                    <p class="dikit">
+                        <strong>AVC-In-Charge: </strong>{{{[AVC-In-Charge]}}}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <img src="https://imgur.com/QlUKMYa.png" style="width: 100%" />
+        </footer>
+    </body>
+</html>
