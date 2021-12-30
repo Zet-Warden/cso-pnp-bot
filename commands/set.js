@@ -2,16 +2,10 @@ const CommandHandler = require('../CommandHandler.js');
 const { createTextMessage } = require('../MessageCreator.js');
 const { setOPAInfo, hasOPABeenChecked } = require('../utils/OpaSheets.js');
 
-async function checkOPA({
-    meta: { username },
-    args: [opaNumber, status = '', ...remarks],
-}) {
-    if (await hasOPABeenChecked(opaNumber)) {
-        return createTextMessage(
-            `The OPA number ${opaNumber} provided has already been checked. If you wish to override these values, use command "ovr" instead.`
-        );
-    }
-
+async function checkOPA(
+    { meta: { username }, args: [opaNumber, status = '', ...remarks] },
+    isOverride = false
+) {
     //check if valid status set
     var status = formatStatus(status);
     if (!status) {
@@ -24,9 +18,26 @@ async function checkOPA({
     const usernameArr = username.split(/[ ]+/);
     //only input first and last name (input format in google sheets)
     const checkedBy = `${usernameArr.slice(0, 1)} ${usernameArr.slice(-1)}`;
-    setOPAInfo({ opaNumber, status, remarks, checkedBy });
+    const result = await setOPAInfo({
+        opaNumber,
+        status,
+        remarks,
+        checkedBy,
+        isOverride,
+    });
+
+    if (result === undefined) {
+        return createTextMessage(
+            `Error executing "set" for OPA number ${opaNumber}. Please ensure that the ${opaNumber} provided is valid.`
+        );
+    } else if (result) {
+        return createTextMessage(
+            'Command acknowledged. In order to check if cells have been properly set and email has been sent, please use the "get" command.'
+        );
+    }
+
     return createTextMessage(
-        'Command acknowledged. In order to check if cells have been properly set and email has been sent, please use the "get" command.'
+        `The OPA number ${opaNumber} provided has already been checked. If you wish to override these values, use command "ovr" instead.`
     );
 }
 
@@ -44,3 +55,4 @@ function formatStatus(status) {
 }
 
 CommandHandler.registerCommand('set', checkOPA);
+CommandHandler.registerCommand('ovr', (args) => checkOPA(args, true));

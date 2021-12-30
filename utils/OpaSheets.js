@@ -11,7 +11,7 @@ doc.useServiceAccountAuth({
     private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
 });
 
-let sheet, rows;
+let opaSheet, rows;
 loadOPASheetData();
 
 /**
@@ -21,8 +21,12 @@ loadOPASheetData();
 async function loadOPASheetData() {
     await doc.loadInfo();
 
-    sheet = doc.sheetsByTitle['OPA']; // index of the OPA sheet
-    rows = await sheet.getRows();
+    opaSheet = doc.sheetsByTitle['OPA']; // index of the OPA sheet
+    rows = await opaSheet.getRows();
+}
+
+async function reloadOPASheetRows() {
+    rows = await opaSheet.getRows();
 }
 
 /**
@@ -40,7 +44,14 @@ async function getOPAInfo(opaNumber) {
     return opaInfo ? removeMetaDataFromOPAInfo(opaInfo) : undefined;
 }
 
-async function setOPAInfo({ opaNumber, status, remarks = '', checkedBy = '' }) {
+async function setOPAInfo({
+    isOverride = false,
+    opaNumber,
+    status,
+    remarks = '',
+    checkedBy = '',
+}) {
+    await reloadOPASheetRows();
     //OPA numbers are only 1 until latest OPA number, i.e. 0 is false
     const isOPANumber = Boolean(Number(opaNumber));
     //OPA rows are 1-indexed, arrays are 0-indexed
@@ -49,56 +60,68 @@ async function setOPAInfo({ opaNumber, status, remarks = '', checkedBy = '' }) {
     //exit immediately if invalid OPA number
     if (!opaInfo) {
         return undefined;
+    } else if (!isOverride && hasOPABeenChecked(opaNumber)) {
+        return false;
     }
+    setOPAInfoInBackground();
+    return true;
 
-    //different from rows
-    //rows are 0-indexed but skips the header, cells do not
-    const rowIndex = opaNumber;
-    await sheet.loadCells({
-        startRowIndex: rowIndex,
-        endRowIndex: rowIndex + 1,
-        startColumnIndex: 15,
-        endColumnIndex: 21,
-    });
+    //costly operation, do not await
+    async function setOPAInfoInBackground() {
+        //different from rows
+        //rows are 0-indexed but skips the header, cells do not
+        const rowIndex = opaNumber;
+        await opaSheet.loadCells({
+            startRowIndex: rowIndex,
+            endRowIndex: rowIndex + 1,
+            startColumnIndex: 15,
+            endColumnIndex: 21,
+        });
 
-    const statusCell = sheet.getCell(rowIndex, 15);
-    const remarksCell = sheet.getCell(rowIndex, 16);
-    const checkedByCell = sheet.getCell(rowIndex, 17);
-    const dateCheckedCell = sheet.getCell(rowIndex, 19);
-    const emailStatusCell = sheet.getCell(rowIndex, 20);
+        const statusCell = opaSheet.getCell(rowIndex, 15);
+        const remarksCell = opaSheet.getCell(rowIndex, 16);
+        const checkedByCell = opaSheet.getCell(rowIndex, 17);
+        const dateCheckedCell = opaSheet.getCell(rowIndex, 19);
+        const emailStatusCell = opaSheet.getCell(rowIndex, 20);
 
-    //get current month, date, year
-    const today = new Date();
-    const month = today.getMonth() + 1;
-    const date = today.getDate();
-    const year = today.getFullYear();
+        //get timestamp
+        const today = new Date();
+        const month = today.getMonth() + 1;
+        const date = today.getDate();
+        const year = today.getFullYear();
 
-    statusCell.value = status == 'APPROVED' ? 'Approved' : 'Pended';
-    remarksCell.value = remarks;
-    checkedByCell.value = checkedBy;
-    dateCheckedCell.value = `${month}/${date}/${year}`;
-    emailStatusCell.value = `Email sent on ${month}/${date}/${year} (via MSTeams)`;
+        let hours = today.getHours();
+        hours = hours >= 13 ? hours - 12 : hours;
+        const minutes = today.getMinutes();
+        const seconds = today.getSeconds();
 
-    await sheet.saveUpdatedCells();
-    await sendHTMLEmail({
-        ...opaInfo,
-        ...{
-            Status: statusCell.value,
-            Remarks: remarksCell.value,
-            'Checked By': checkedByCell.value,
-            'Date Checked': dateCheckedCell.value,
-            'AVC-In-Charge': opaInfo['AVC-In-Charge']
-                ? opaInfo['AVC-In-Charge']
-                : 'N/A',
-        },
-    });
-    //reload for those who'll check if set has been successful
-    loadOPASheetData();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        statusCell.value = status == 'APPROVED' ? 'Approved' : 'Pended';
+        remarksCell.value = remarks;
+        checkedByCell.value = checkedBy;
+        dateCheckedCell.value = `${month}/${date}/${year}`;
+        emailStatusCell.value = `Email sent on ${month}/${date}/${year} at ${hours}:${minutes}:${seconds} ${ampm} (via MSTeams)`;
+
+        await opaSheet.saveUpdatedCells();
+        await sendHTMLEmail({
+            ...opaInfo,
+            ...{
+                Status: statusCell.value,
+                Remarks: remarksCell.value,
+                'Checked By': checkedByCell.value,
+                'Date Checked': dateCheckedCell.value,
+                'AVC-In-Charge': opaInfo['AVC-In-Charge']
+                    ? opaInfo['AVC-In-Charge']
+                    : 'N/A',
+            },
+        });
+        //reload for those who'll check if set has been successful
+        reloadOPASheetRows();
+    }
 }
 
-async function hasOPABeenChecked(opaNumber) {
-    await loadOPASheetData();
-
+function hasOPABeenChecked(opaNumber) {
     //OPA numbers are only 1 until latest OPA number, i.e. 0 is false
     const isOPANumber = Boolean(Number(opaNumber));
     //OPA rows are 1-indexed, arrays are 0-indexed
