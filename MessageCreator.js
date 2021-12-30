@@ -1,11 +1,19 @@
-function createMessage({ type = 'message', textFormat = '', text = '' }) {
+function createTextMessage(text = '') {
     return {
-        type,
-        textFormat,
+        type: 'message',
         text,
     };
 }
 
+function createHTMLMessage(html = '') {
+    return {
+        type: 'message',
+        textFormat: 'xml',
+        text: html,
+    };
+}
+
 module.exports = {
-    createMessage,
+    createTextMessage,
+    createHTMLMessage,
 };

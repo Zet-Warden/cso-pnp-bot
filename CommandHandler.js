@@ -1,4 +1,4 @@
-const { createMessage } = require('./MessageCreator');
+const { createTextMessage } = require('./MessageCreator');
 
 const CommanHandler = {
     commands: {},
@@ -15,7 +15,7 @@ const CommanHandler = {
     handleCommand(_command, args) {
         var command = _command.toLowerCase();
         if (this.commands[command] == undefined) {
-            return dispatchMessage(
+            return createTextMessage(
                 `"${_command}" is not a registered command. Please try again`
             );
         }

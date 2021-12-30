@@ -1,23 +1,19 @@
 const CommandHandler = require('../CommandHandler.js');
+const {
+    createTextMessage,
+    createHTMLMessage,
+} = require('../MessageCreator.js');
 const { getOPAInfo } = require('../utils/OpaSheets.js');
 
 async function handleOPACommand(args) {
     const rowInfo = await getOPAInfo(args[0]);
     console.log(rowInfo);
     if (!rowInfo) {
-        return {
-            type: 'message',
-            textFormat: 'xml',
-            text: `Unable to get OPA-Number: ${args[0]}`,
-        };
+        return createTextMessage(`Unable to get OPA-Number: ${args[0]}`);
     }
 
     const table = createTable(rowInfo);
-    return {
-        type: 'message',
-        textFormat: 'xml',
-        text: table,
-    };
+    return createHTMLMessage(table);
 }
 
 function createTable(info) {
