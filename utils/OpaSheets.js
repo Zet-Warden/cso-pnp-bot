@@ -87,14 +87,14 @@ async function setOPAInfo({
 
         //get timestamp
         const today = DateTime.now().setZone('UTC+8');
-        const month = today.month;
-        const date = today.day;
-        const year = today.year;
+        const month = String(today.month).padStart(2, '0');
+        const date = String(today.day).padStart(2, '0');
+        const year = String(today.year).padStart(2, '0');
 
-        let hours = today.hour;
+        let hours = String(today.hour).padStart(2, '0');
         hours = hours >= 13 ? hours - 12 : hours;
-        const minutes = today.minute;
-        const seconds = today.second;
+        const minutes = String(today.minute).padStart(2, '0');
+        const seconds = String(today.second).padStart(2, '0');
 
         const ampm = hours >= 12 ? 'PM' : 'AM';
 
