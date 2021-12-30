@@ -5,14 +5,19 @@ const {
 } = require('../MessageCreator.js');
 const { getOPAInfo } = require('../utils/OpaSheets.js');
 
-async function handleOPACommand(args) {
-    const rowInfo = await getOPAInfo(args[0]);
-    console.log(rowInfo);
-    if (!rowInfo) {
+/**
+ * Sends a message to MSTeams containing the info of the requested OPA number
+ * @param {[String]} args arguments sent with the command
+ * @returns MSTeam response object, containing info about the requested OPA number
+ */
+async function sendOPAInfo(args) {
+    const opaInfo = await getOPAInfo(args[0]);
+
+    if (!opaInfo) {
         return createTextMessage(`Unable to get OPA-Number: ${args[0]}`);
     }
 
-    const table = createTable(rowInfo);
+    const table = createTable(opaInfo);
     return createHTMLMessage(table);
 }
 
@@ -39,4 +44,4 @@ function createTable(info) {
     return `${tableHeader}${tableInfo}`;
 }
 
-CommandHandler.registerCommand('get', handleOPACommand);
+CommandHandler.registerCommand('get', sendOPAInfo);
