@@ -17,6 +17,7 @@ router.post('/api', async (req, res) => {
     console.log('user message:', text);
     const [mention, command, ...args] = text
         .replace('&nbsp;', ' ')
+        .replace('\n', ' ')
         .split(/[ ]+/);
     console.log('mention:', mention, 'command:', command, 'arguments:', args);
     const response = await CommandHandler.handleCommand(command, {
