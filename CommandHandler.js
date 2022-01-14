@@ -13,7 +13,7 @@ const CommanHandler = {
     },
 
     handleCommand(_command, args) {
-        console.log(this.commands);
+        console.log(this.commands[command] == undefined);
         var command = _command.toLowerCase();
         if (this.commands[command] == undefined) {
             return createTextMessage(
