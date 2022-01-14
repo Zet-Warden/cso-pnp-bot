@@ -1,7 +1,7 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const { DateTime } = require('luxon');
-const { sendHTMLEmail } = require('./Mailer.js');
 const getOPAInfoFromRows = require('./opaHelpers/getOPAInfo.js');
+const setOPAInfoAndSendEmail = require('./opaHelpers/setOPAInfo.js');
+const getNextOPAInfoFromRows = require('./opaHelpers/getNextOPAInfo.js');
 require('dotenv').config();
 
 const doc = new GoogleSpreadsheet(
@@ -38,97 +38,22 @@ async function reloadOPASheetRows() {
  *          returns undefined
  */
 async function getOPAInfo(opaNumber) {
+    await reloadOPASheetRows();
     return getOPAInfoFromRows(opaNumber, rows);
 }
 
-async function setOPAInfo({
-    isOverride = false,
-    opaNumber,
-    status,
-    remarks = '',
-    checkedBy = '',
-}) {
+async function setOPAInfo(data) {
     await reloadOPASheetRows();
-    //OPA numbers are only 1 until latest OPA number, i.e. 0 is false
-    const isOPANumber = Boolean(Number(opaNumber));
-    //OPA rows are 1-indexed, arrays are 0-indexed
-    const opaInfo = isOPANumber && rows[opaNumber - 1];
-
-    //exit immediately if invalid OPA number
-    if (!opaInfo) {
-        return undefined;
-    } else if (!isOverride && hasOPABeenChecked(opaNumber)) {
-        return false;
-    }
-    setOPAInfoInBackground();
-    return true;
-
-    //costly operation, do not await
-    async function setOPAInfoInBackground() {
-        //different from rows
-        //rows are 0-indexed but skips the header, cells do not
-        const rowIndex = opaNumber;
-        await opaSheet.loadCells({
-            startRowIndex: rowIndex,
-            endRowIndex: rowIndex + 1,
-            startColumnIndex: 15,
-            endColumnIndex: 21,
-        });
-
-        const statusCell = opaSheet.getCell(rowIndex, 15);
-        const remarksCell = opaSheet.getCell(rowIndex, 16);
-        const checkedByCell = opaSheet.getCell(rowIndex, 17);
-        const dateCheckedCell = opaSheet.getCell(rowIndex, 19);
-        const emailStatusCell = opaSheet.getCell(rowIndex, 20);
-
-        //get timestamp
-        const today = DateTime.now().setZone('UTC+8');
-        const month = String(today.month).padStart(2, '0');
-        const date = String(today.day).padStart(2, '0');
-        const year = String(today.year).padStart(2, '0');
-
-        let hours = String(today.hour).padStart(2, '0');
-        hours = hours >= 13 ? hours - 12 : hours;
-        const minutes = String(today.minute).padStart(2, '0');
-        const seconds = String(today.second).padStart(2, '0');
-
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-
-        statusCell.value = status == 'APPROVED' ? 'Approved' : 'Pended';
-        remarksCell.value = remarks;
-        checkedByCell.value = checkedBy;
-        dateCheckedCell.value = `${month}/${date}/${year}`;
-        emailStatusCell.value = `Email sent on ${month}/${date}/${year} at ${hours}:${minutes}:${seconds} ${ampm} (via MSTeams)`;
-
-        await opaSheet.saveUpdatedCells();
-        await sendHTMLEmail({
-            ...opaInfo,
-            ...{
-                Status: statusCell.value,
-                Remarks: remarksCell.value,
-                'Checked By': checkedByCell.value,
-                'Date Checked': dateCheckedCell.value,
-                'AVC-In-Charge': opaInfo['AVC-In-Charge']
-                    ? opaInfo['AVC-In-Charge']
-                    : 'N/A',
-            },
-        });
-        //reload for those who'll check if set has been successful
-        reloadOPASheetRows();
-    }
+    return setOPAInfoAndSendEmail(opaSheet, rows, data);
 }
 
-function hasOPABeenChecked(opaNumber) {
-    //OPA numbers are only 1 until latest OPA number, i.e. 0 is false
-    const isOPANumber = Boolean(Number(opaNumber));
-    //OPA rows are 1-indexed, arrays are 0-indexed
-    const opaInfo = isOPANumber && rows[opaNumber - 1];
-
-    return opaInfo ? Boolean(opaInfo['Status']) : false;
+async function getNextOPAInfo() {
+    await reloadOPASheetRows();
+    return getNextOPAInfoFromRows(rows);
 }
 
 module.exports = {
     getOPAInfo,
     setOPAInfo,
-    hasOPABeenChecked,
+    getNextOPAInfo,
 };

@@ -1,6 +1,6 @@
 const CommandHandler = require('../CommandHandler.js');
 const { createTextMessage } = require('../MessageCreator.js');
-const { setOPAInfo, hasOPABeenChecked } = require('../utils/OpaSheets.js');
+const { setOPAInfo } = require('../utils/OpaSheets.js');
 
 async function checkOPA(
     { meta: { username }, args: [opaNumber, status = '', ...remarks] },
@@ -17,7 +17,9 @@ async function checkOPA(
     //split by whitespace
     const usernameArr = username.split(/[ ]+/);
     //only input first and last name (input format in google sheets)
-    const checkedBy = `${usernameArr.slice(0, 1)} ${usernameArr.slice(-1)}`;
+    let checkedBy = `${usernameArr.slice(0, 1)} ${usernameArr.slice(-1)}`;
+    checkedBy = checkedBy === 'Ry Vicente' ? 'Ry De Vicente' : checkedBy;
+
     const result = await setOPAInfo({
         opaNumber,
         status,
