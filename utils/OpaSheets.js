@@ -1,6 +1,7 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { DateTime } = require('luxon');
 const { sendHTMLEmail } = require('./Mailer.js');
+const getOPAInfoFromRows = require('./opaHelpers/getOPAInfo.js');
 require('dotenv').config();
 
 const doc = new GoogleSpreadsheet(
@@ -37,12 +38,7 @@ async function reloadOPASheetRows() {
  *          returns undefined
  */
 async function getOPAInfo(opaNumber) {
-    //OPA numbers are only 1 until latest OPA number, i.e. 0 is false
-    const isOPANumber = Boolean(Number(opaNumber));
-    //OPA rows are 1-indexed, arrays are 0-indexed
-    const opaInfo = isOPANumber && rows[opaNumber - 1];
-
-    return opaInfo ? removeMetaDataFromOPAInfo(opaInfo) : undefined;
+    return getOPAInfoFromRows(opaNumber, rows);
 }
 
 async function setOPAInfo({
@@ -129,24 +125,6 @@ function hasOPABeenChecked(opaNumber) {
     const opaInfo = isOPANumber && rows[opaNumber - 1];
 
     return opaInfo ? Boolean(opaInfo['Status']) : false;
-}
-
-/**
- * Generates a new object without metadata from google sheets
- * @param {Object} opaInfo the OPA information from google sheets
- * @returns OPA object that contains OPA information without metadata from google sheets
- */
-function removeMetaDataFromOPAInfo(opaInfo) {
-    const opaObject = {}; //object that contains OPA information
-
-    Object.keys(opaInfo).forEach((column) => {
-        //metadata is prefixed with '_'
-        if (column.charAt(0) != '_') {
-            // const shortenedColumn = shortenColumnName(column);
-            opaObject[column] = opaInfo[column] || '';
-        }
-    });
-    return opaObject;
 }
 
 module.exports = {
