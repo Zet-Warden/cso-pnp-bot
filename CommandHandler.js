@@ -14,6 +14,7 @@ const CommanHandler = {
 
     handleCommand(_command, args) {
         var command = _command.toLowerCase();
+        console.log(command);
         console.log(this.commands);
         console.log(this.commands[command]);
         console.log(this.commands[command] == undefined);
