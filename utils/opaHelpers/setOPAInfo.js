@@ -16,7 +16,7 @@ async function setOPAInfo(
     //OPA numbers are only 1 until latest OPA number, i.e. 0 is false
     const isOPANumber = Boolean(Number(opaNumber));
     //OPA rows are 1-indexed, arrays are 0-indexed
-    const opaInfo = isOPANumber && rows[opaNumber - 1];
+    const opaInfo = isOPANumber && rows[opaNumber - 4282];
 
     //exit immediately if invalid OPA number
     if (!opaInfo) {
